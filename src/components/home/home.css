@@ -1,0 +1,28 @@
+.fullscreen {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100vh;
+    background-position: center;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+.product {
+    padding: 20px
+}
+
+.belowthefold {
+    background-color: white;
+}
+
+#banner {
+    -moz-animation-duration: 3s;
+    -moz-animation-delay: 1s;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-delay: 1s;
+    animation-duration: 3s;
+    animation-delay: 1s;
+}

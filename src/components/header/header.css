@@ -1,0 +1,68 @@
+.App-header {
+    background-color: rgba(34, 34, 34, 0.0);
+    /* height: 150px; */
+    padding: 20px 0px 20px 0px;
+    color: black;
+}
+
+.App-title {
+    text-shadow: 1px 1px rgba(255,255,255, 0.6);
+    margin-bottom: 15px;
+    margin-left: 150px;
+    margin-right: 50px;
+}
+
+.logo-large {
+    font-size: 3em;
+    transition: font-size 0.7s;
+}
+
+.logo-small{
+    font-size: 2em;
+    transition: font-size 0.7s;
+}
+
+#text {
+    padding: 5px 20px 5px 20px;
+}
+
+.header-div {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding-top: 30;
+    z-index: 10;
+}
+
+@media(max-width: 500px){
+    .App-title{
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: 20px;
+        margin-right: 20px;
+        font-size: 2em;
+    }
+    .logo-small{
+        font-size: 1.5em;
+        transition: font-size 0.7s;
+    }
+    .header-div {
+        padding-top: 20px;
+        flex-direction: row;
+        /* background-color: rgba(34, 34, 34, 0.2); */
+        /* color: #fff; */
+    }
+    .menuContainer{
+        margin-top: 20px;
+    }
+    .menuItem {
+        display: inline !important;
+        font-size: 1.5em;
+        color: #fff;
+    }
+}
