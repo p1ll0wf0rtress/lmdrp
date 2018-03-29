@@ -15,7 +15,9 @@ export default class Home extends Component {
     constructor(props){
         super(props)
 
-        this.state = {}
+        this.state = {
+            cart: []
+        }
     }
 
     componentDidMount(){
@@ -26,28 +28,37 @@ export default class Home extends Component {
 
     getProducts = () => {
         Moltin.Products.All().then((products) => {
-            // console.log(products.data);
-            this.setProducts(products.data);
+            console.log(products)
+            var productsWithImages = [];
+            products.data.forEach((product) => {
+                axios.get(`https://api.moltin.com/v2/files/${product.relationships.main_image.data.id}`, { 'headers': { 'Authorization': `Bearer: ${this.state.auth}`} })
+                .then((result) => {
+                    productsWithImages.push({ id: product.id, img: result.data.data.link.href, name: product.name, description: product.description, price: product.meta.display_price.without_tax.formatted })
+                })
+                .then(() => { this.setProducts(productsWithImages) })
+                .catch((err) => { console.log(err) })
+            })
         });
     }
 
     setProducts = (products) => {
-        products.forEach((product) => {
-            axios.get(`https://api.moltin.com/v2/files/${product.relationships.main_image.data.id}`, { 'headers': { 'Authorization': `Bearer: ${this.state.auth}`} })
-            .then((result) => {
-                var link = result.data.data.link.href;
-                var e = document.createElement("div");
-                e.setAttribute('class', "four columns product")
-                e.innerHTML = `
-                <img src=${link} alt=${product.name} height="100"/>
-                <h4>${product.name}</h4>
-                <p>${product.description}</p>
-                <p>${product.meta.display_price.without_tax.formatted}</p>`;
-                document.getElementById('products_container').appendChild(e);
-            }).catch((err) => {
-                console.log(err)
-            })
-        })
+        let items = products.map((product) => 
+            <div className="four columns product" key={product.name}>
+                <img src={product.img} alt={product.name} style={{height: 100}}/>
+                <h4>{product.name}</h4>
+                {/* <p>{product.description}</p> */}
+                <p>{product.price}</p>
+                <button className="addToCart" onClick={() => this.addToCart(product.id)}>Add To Cart</button>
+            </div>
+        )
+        this.setState({products: items})
+    }
+
+    addToCart = (id) => {
+        console.log(id)
+        var cart = this.state.cart;
+        cart.push({pId: id, qty: 1});
+        this.setState({cart: cart});
     }
 
     render(){
@@ -57,12 +68,14 @@ export default class Home extends Component {
                 </div>
                 <div style={{marginTop: 75}} className="belowthefold">
                     <div className="container">
-                        <div className="row animated" id="products_container"></div>
-                        <div className="row">
+                        <div className="row animated" id="products_container">
+                            {this.state.products}
+                        </div>
+                        {/* <div className="row">
                             <div className="two columns offset-by-five">
                                 <h1><strong>LMN</strong>drp</h1>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

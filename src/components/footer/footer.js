@@ -10,7 +10,7 @@ export default class Footer extends Component {
     render(){
         return(
             <div>
-                <div className="container">
+                <div className="container" style={{marginTop: 50}}>
                     <div className="row">
                         <div className="two columns" style={{textAlign: 'left'}}>
                             <ul>
